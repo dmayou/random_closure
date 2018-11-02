@@ -1,24 +1,22 @@
 // Guess a random number
-function guessANumber(upperBound, maxGuesses) {
-  let secret, guessesLeft;
-  checkGuess(null); // init secret and guessesLeft
-  function checkGuess(guess) {
-    if (secret === undefined) {
-       secret = Math.floor(Math.random() * upperBound) + 1;
-       guessesLeft = maxGuesses;
+function guessANumber(bound, max) {
+  let secret = Math.floor(Math.random() * bound) + 1;
+  let guessesLeft = max;
+
+  function checkGuess(guess) { // inner function
+    if (guess === secret && guessesLeft > 0) {
+      return true;
     } else {
-      if (guess === secret && guessesLeft > 0) {
-        return true;
-      } else {
-        guessesLeft--;
-        return false;
-      }
+      guessesLeft--;
+      return false;
     }
   }
-  return {
+
+  return { // guessANumber
+    init: function (upperBound, maxGuesses) {guessANumber(upperBound, maxGuesses)},
     guess: g => checkGuess(g) ? 'you\'re right!' : 'try again!',
-    left: () => `${guessesLeft} more guesses`,
-    hint: () => `psst, it\'s ${secret}`
+    left: () => `${guessesLeft} more guesses.`,
+    hint: () => `psst, it\'s ${secret}.`
   }
 }
 
